@@ -7,7 +7,7 @@ export default {
   "title": "Physical AI & Humanoid Robotics Textbook",
   "tagline": "Bridging the gap between the digital brain and the physical body.",
   "favicon": "img/favicon.ico",
-  "url": "https://ai-driven-development.github.io",
+  "url": "https://ai-driven-development.github.i",
   "baseUrl": "/AI_Robotics_book/",
   "organizationName": "ai-driven-development",
   "projectName": "AI_Robotics_book",
@@ -49,35 +49,43 @@ export default {
       },
       "items": [
         {
-          "type": "doc",
-          "docId": "01-intro-to-ros2",
+          "to": "/AI_Robotics_book/docs/01-intro-to-ros2",
           "position": "left",
           "label": "Textbook"
         },
         {
-          "to": "/docs/category/module-1-ros-2",
+          "to": "/AI_Robotics_book/docs/category/module-1-ros-2",
           "label": "Module 1: ROS 2",
           "position": "left"
         },
         {
-          "to": "/docs/category/module-2-digital-twin",
+          "to": "/AI_Robotics_book/docs/category/module-2-digital-twin",
           "label": "Module 2: Digital Twin",
           "position": "left"
         },
         {
-          "to": "/docs/category/module-3-ai-robot-brain",
+          "to": "/AI_Robotics_book/docs/category/module-3-ai-robot-brain",
           "label": "Module 3: AI-Robot Brain",
           "position": "left"
         },
         {
-          "to": "/docs/category/module-4-vla",
+          "to": "/AI_Robotics_book/docs/category/module-4-vla",
           "label": "Module 4: VLA",
           "position": "left"
         },
         {
-          "href": "https://github.com/ai-driven-development/AI_Robotics_book",
-          "label": "GitHub",
-          "position": "right"
+          "label": "Contact",
+          "position": "right",
+          "items": [
+            {
+              "label": "GitHub (repo)",
+              "href": "https://github.com/MUKARRAM-ONE/AI-driven-development"
+            },
+            {
+              "label": "LinkedIn",
+              "href": "https://www.linkedin.com/in/mukarram-razzaq-0146572ba/"
+            }
+          ]
         }
       ],
       "hideOnScroll": false
@@ -90,7 +98,7 @@ export default {
           "items": [
             {
               "label": "Introduction",
-              "to": "/docs/01-intro-to-ros2"
+              "to": "/AI_Robotics_book/docs/01-intro-to-ros2"
             }
           ]
         },
@@ -99,12 +107,12 @@ export default {
           "items": [
             {
               "label": "GitHub",
-              "href": "https://github.com/ai-driven-development/AI_Robotics_book"
+              "href": "https://github.com/MUKARRAM-ONE/AI-driven-development/tree/main/AI_Robotics_book"
             }
           ]
         }
       ],
-      "copyright": "Copyright © 2025 AI-Driven Development. Built with Docusaurus."
+      "copyright": "Copyright © 2025 Created by Mukarram Razzaq Using AI Spec Driven Development. Built with Docusaurus."
     },
     "prism": {
       "theme": {

@@ -1,3 +1,50 @@
+# RAG Backend (Qdrant + OpenAI)
+
+This folder contains a minimal Retrieval-Augmented Generation (RAG) backend implementation that indexes your Docusaurus docs into Qdrant Cloud and exposes a simple search API that augments queries with retrieved context and generates answers via OpenAI.
+
+## Requirements
+
+- A Qdrant Cloud instance (URL + API key)
+- An OpenAI API key (or another embeddings/LLM provider)
+
+## Quickstart
+
+1. Create a virtual environment and install dependencies:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+2. Copy `.env.example` to `.env` and fill in your keys:
+
+```bash
+cp .env.example .env
+# Edit .env and set OPENAI_API_KEY, QDRANT_URL, QDRANT_API_KEY
+```
+
+3. Ingest docs into Qdrant:
+
+```bash
+python ingest.py
+```
+
+4. Run the API server locally:
+
+```bash
+python server.py
+```
+
+5. POST queries to `http://localhost:8000/search` with JSON `{ "query": "How to ..." }`.
+
+## Notes
+
+- This is a minimal example to get you started. For production use you should add:
+  - better text chunking (token-aware)
+  - error handling and retries
+  - rate limits and authentication for the API
+  - vector index persistence and incremental updates
 # RAG Search Backend
 
 This directory is intended for the Retrieval-Augmented Generation (RAG) search backend for the textbook content.
