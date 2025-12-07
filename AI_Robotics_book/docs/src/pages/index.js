@@ -32,7 +32,7 @@ export default function Home() {
             Bridging the gap between the digital brain and the physical body
           </p>
           <div className={styles.heroButtons}>
-            <a href="/AI_Robotics_book/docs/01-intro-to-ros2" className={clsx(styles.button, styles.buttonPrimary)}>
+            <a href="/AI-driven-development/docs/01-intro-to-ros2" className={clsx(styles.button, styles.buttonPrimary)}>
               Start Learning →
             </a>
             <a href="https://github.com/MUKARRAM-ONE/AI-driven-development/tree/main/AI_Robotics_book" className={clsx(styles.button, styles.buttonSecondary)}>
@@ -127,7 +127,7 @@ export default function Home() {
       <section className={clsx(styles.cta, 'revealOnScroll')}>
         <h2>Ready to Build Intelligent Robots?</h2>
         <p>Start with the fundamentals and progress to building your own autonomous systems.</p>
-        <a href="/AI_Robotics_book/docs/01-intro-to-ros2" className={clsx(styles.button, styles.buttonLarge)}>
+        <a href="/AI-driven-development/docs/01-intro-to-ros2" className={clsx(styles.button, styles.buttonLarge)}>
           Get Started Now
         </a>
       </section>
