@@ -61,8 +61,7 @@ const config = {
         },
         items: [
           {
-            type: 'doc',
-            docId: '01-intro-to-ros2',
+            to: '/AI_Robotics_book/docs/01-intro-to-ros2',
             position: 'left',
             label: 'Textbook',
           },
