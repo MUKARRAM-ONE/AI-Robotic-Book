@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import styles from './index.module.css';
+import ChatWidget from '../components/ChatWidget';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -147,6 +148,11 @@ export default function Home() {
             Send a message
           </button>
         </div>
+      </section>
+
+      {/* Chat Widget */}
+      <section className={clsx('revealOnScroll')}>
+        <ChatWidget />
       </section>
 
       {/* Contact Modal */}

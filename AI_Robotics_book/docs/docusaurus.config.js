@@ -28,6 +28,12 @@ const config = {
     locales: ['en'],
   },
 
+  // Custom fields are accessible in the site via useDocusaurusContext().siteConfig.customFields
+  customFields: {
+    // Set this to your running RAG backend URL (no trailing slash), e.g. https://your-backend.example.com
+    ragApiUrl: '',
+  },
+
   presets: [
     [
       'classic',
