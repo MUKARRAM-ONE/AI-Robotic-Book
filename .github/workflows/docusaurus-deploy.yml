@@ -19,9 +19,12 @@ jobs:
         run: |
           npm ci
           npm run build
+          echo "Build completed successfully"
+          ls -la build/ || echo "Build directory not found"
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./AI_Robotics_book/docs/build
           publish_branch: gh-pages
+          force_orphan: true
