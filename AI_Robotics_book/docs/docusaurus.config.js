@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://ai-driven-development.github.i',
+  url: 'https://ai-driven-development.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/AI_Robotics_book/',
@@ -66,24 +66,26 @@ const config = {
             label: 'Textbook',
           },
           {
-            to: '/AI_Robotics_book/docs/category/module-1-ros-2',
-            label: 'Module 1: ROS 2',
-            position: 'left'
-          },
-          {
-            to: '/AI_Robotics_book/docs/category/module-2-digital-twin',
-            label: 'Module 2: Digital Twin',
-            position: 'left'
-          },
-          {
-            to: '/AI_Robotics_book/docs/category/module-3-ai-robot-brain',
-            label: 'Module 3: AI-Robot Brain',
-            position: 'left'
-          },
-          {
-            to: '/AI_Robotics_book/docs/category/module-4-vla',
-            label: 'Module 4: VLA',
-            position: 'left'
+            label: 'Modules',
+            position: 'left',
+            items: [
+              {
+                label: 'Module 1: ROS 2',
+                to: '/AI_Robotics_book/docs/01-intro-to-ros2',
+              },
+              {
+                label: 'Module 2: Digital Twin',
+                to: '/AI_Robotics_book/docs/04-urdf-for-humanoids',
+              },
+              {
+                label: 'Module 3: AI-Robot Brain',
+                to: '/AI_Robotics_book/docs/08-isaac-sim-intro',
+              },
+              {
+                label: 'Module 4: VLA',
+                to: '/AI_Robotics_book/docs/11-vla-whisper',
+              },
+            ]
           },
           {
             label: 'Contact',
