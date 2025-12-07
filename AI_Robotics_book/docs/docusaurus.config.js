@@ -14,7 +14,7 @@ const config = {
   url: 'https://ai-driven-development.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/AI_Robotics_book/',
+  baseUrl: '/AI-driven-development/',
 
   // GitHub pages deployment config.
   organizationName: 'ai-driven-development', // Usually your GitHub org/user name.
@@ -61,7 +61,7 @@ const config = {
         },
         items: [
           {
-            to: '/AI_Robotics_book/docs/01-intro-to-ros2',
+            to: '/AI-driven-development/docs/01-intro-to-ros2',
             position: 'left',
             label: 'Textbook',
           },
@@ -71,19 +71,19 @@ const config = {
             items: [
               {
                 label: 'Module 1: ROS 2',
-                to: '/AI_Robotics_book/docs/01-intro-to-ros2',
+                to: '/AI-driven-development/docs/01-intro-to-ros2',
               },
               {
                 label: 'Module 2: Digital Twin',
-                to: '/AI_Robotics_book/docs/04-urdf-for-humanoids',
+                to: '/AI-driven-development/docs/04-urdf-for-humanoids',
               },
               {
                 label: 'Module 3: AI-Robot Brain',
-                to: '/AI_Robotics_book/docs/08-isaac-sim-intro',
+                to: '/AI-driven-development/docs/08-isaac-sim-intro',
               },
               {
                 label: 'Module 4: VLA',
-                to: '/AI_Robotics_book/docs/11-vla-whisper',
+                to: '/AI-driven-development/docs/11-vla-whisper',
               },
             ]
           },
@@ -111,7 +111,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/AI_Robotics_book/docs/01-intro-to-ros2',
+                to: '/AI-driven-development/docs/01-intro-to-ros2',
               },
             ],
           },
