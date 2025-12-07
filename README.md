@@ -95,7 +95,7 @@ npm run start
 
 ## 📚 Documentation
 
-The textbook is hosted at: [AI Robotics Textbook](https://ai-driven-development.github.io/AI_Robotics_book/)
+The textbook is hosted at: [AI Robotics Textbook](https://mukarram-one.github.io/AI-driven-development/)
 
 ## 🤝 Contributing
 
@@ -111,7 +111,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-AI-Driven Development Community
+Mukarram Razzaq. Created this book by AI Spec Driven Development Using sourses like google scholar etc.
 
 ## 🎓 Learning Outcomes
 
