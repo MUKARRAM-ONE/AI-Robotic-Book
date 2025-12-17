@@ -1,32 +1,68 @@
 --- 
 id: 02-ros2-nodes-topics-services
-title: "Chapter 2: Nodes, Topics, and Services"
-sidebar_label: "2. Nodes, Topics, and Services"
+title: "Chapter 2: Nodes, Topics, Services, and Actions"
+sidebar_label: "2. Nodes, Topics, & Actions"
 ---
 
-## Chapter 2: Nodes, Topics, and Services
+## Chapter 2: Nodes, Topics, Services, and Actions
 
-**Objective**: Learn the fundamental communication patterns in ROS 2.
+**Objective**: Master the fundamental communication patterns in ROS 2 and learn how to inspect them from the command line.
 
-### 2.1 ROS 2 Graph Concepts
+### 2.1 The ROS 2 Graph and the Anatomy of a Node
 
-The "ROS Graph" is the network of ROS 2 elements processing data together. It's a peer-to-peer network of processes (or **nodes**) that are loosely coupled. The graph is composed of:
+The "ROS Graph" is the network of all the ROS 2 elements processing data together. It's best imagined as a dynamic web of independent programs that find and talk to each other. The core components of this graph are **Nodes**.
 
--   **Nodes**: A node is an executable that uses ROS 2 to communicate with other nodes. Each node in ROS should be responsible for a single, module purpose (e.g., one node for controlling a wheel motor, one node for controlling a laser range-finder).
--   **Topics**: A topic is a named bus over which nodes exchange messages. Topics are intended for unidirectional, streaming data.
--   **Services**: A service is a request/response communication pattern. One node offers a service, and another node can call that service.
--   **Actions**: An action is for long-running tasks. It provides feedback during execution and is preemptable.
--   **Parameters**: A parameter is a configuration value for a node. You can think of parameters as node settings.
+#### What is a Node?
+A **Node** is the fundamental processing unit in ROS. Think of it as a small, specialized worker in a large factory. Each node should have a single, clearly defined purpose, such as:
+- Controlling the motors for the left wheel.
+- Publishing data from a LiDAR sensor.
+- Calculating a path for the robot to follow.
+- Monitoring the robot's battery level.
 
-![ROS 2 Pub/Sub Architecture](/img/module1-pub-sub-sequence.svg)
+This modular philosophy is a cornerstone of ROS development. By breaking a complex system down into simple, reusable nodes, your software becomes easier to debug, maintain, and repurpose for future projects.
+
+#### Node Lifecycle: Building Robust Systems
+In complex robotic applications, simply starting and stopping nodes isn't enough. We need to control their state in a more granular way. For this, ROS 2 provides a standard state machine called the **Lifecycle** system, available to nodes that inherit from `rclpy.lifecycle.LifecycleNode`. These "Managed Nodes" have a defined set of states, ensuring predictable and robust behavior.
+
+![A diagram of the ROS 2 Node Lifecycle](/img/node_lifecycle.jpeg)
+
+The primary states are:
+-   **Unconfigured**: The default state. The node exists as an object but has not allocated any resources or set up its communication channels.
+-   **Inactive**: The node has been configured and is ready, but it is not actively processing data. In this state, you can reconfigure parameters without affecting the rest of the system.
+-   **Active**: The node is running and performing all its tasks: publishing messages, responding to services, etc. This is the main operational state.
+-   **Finalized**: The terminal state before the node is destroyed.
+
+This state machine allows a system supervisor to bring up, shut down, and reconfigure a complex network of nodes in an orderly fashion, which is critical for fault tolerance and system recovery.
+
+#### Node Composition: The Best of Both Worlds
+While running each node in a separate operating system process provides excellent isolation (a crash in one node doesn't bring down others), it comes with performance overhead. In ROS 2, you can use **Composition** to combine multiple nodes into a single process. This allows them to communicate more efficiently by passing data directly in memory, bypassing the networking stack entirely, while still maintaining the logical separation of nodes in your code. This gives you the modular code design of multiple nodes with the performance of a single, optimized program.
 
 ### 2.2 The Publisher-Subscriber Pattern (Topics)
 
-The most common communication pattern in ROS is the publisher-subscriber model, which is anonymous and asynchronous. A node that produces data **publishes** it to a named topic. A node that is interested in that data **subscribes** to that topic. There can be multiple publishers and multiple subscribers on a single topic.
+The most common communication pattern in ROS is the **Publisher-Subscriber** model, implemented via **Topics**. This model is anonymous and asynchronous.
+- A node that produces data **publishes** it to a named topic.
+- A node that needs that data **subscribes** to that topic.
+- There can be many publishers and many subscribers on a single topic.
 
-#### Creating a Publisher Node in Python
+Crucially, the publishing node has no knowledge of who is subscribing, and subscribers don't know who is publishing. They are completely decoupled. This makes for a very flexible and reconfigurable system.
 
-Here is a simple example of a Python node that publishes a "Hello World" message every second.
+![A diagram showing a Publisher node sending a message to a Topic, and two Subscriber nodes receiving that message.](/img/module1-pub-sub-sequence.svg)
+
+#### Defining Messages (`.msg` files)
+The data sent on topics is defined in `.msg` files. These are simple text files that define the data structure. For example, a custom message to report a robot's battery state might be:
+
+```
+# file: my_robot_interfaces/msg/BatteryState.msg
+std_msgs/Header header
+float32 voltage
+float32 percentage
+bool is_charging
+```
+
+This defines a message with a timestamp (`header`), a `voltage`, a `percentage`, and a boolean `is_charging` status. When you build your workspace, ROS 2 automatically generates the corresponding code (Python class or C++ struct) for you to use in your nodes.
+
+#### Code Breakdown: Publisher and Subscriber
+Below is a line-by-line explanation of the simple publisher from the `src` directory.
 
 ```python
 import rclpy
@@ -35,141 +71,77 @@ from std_msgs.msg import String
 
 class SimplePublisher(Node):
     def __init__(self):
+        # 1. Initialize the Node with a name
         super().__init__('simple_publisher')
+        
+        # 2. Create a publisher. 
+        #    Args: message type, topic name, and QoS "history depth"
         self.publisher_ = self.create_publisher(String, 'chatter', 10)
+        
+        # 3. Create a timer to trigger the callback every 1.0 second
         self.timer = self.create_timer(1.0, self.timer_callback)
         self.get_logger().info('Publisher has been started.')
 
     def timer_callback(self):
+        # 4. Create a message object
         msg = String()
         msg.data = f"Hello World: {self.get_clock().now()}"
+        
+        # 5. Publish the message
         self.publisher_.publish(msg)
         self.get_logger().info(f'Publishing: "{msg.data}"')
 
 def main(args=None):
+    # 6. Initialize the rclpy library
     rclpy.init(args=args)
+    
+    # 7. Create an instance of the node
     simple_publisher = SimplePublisher()
+    
+    # 8. "Spin" the node, which allows it to process callbacks
     rclpy.spin(simple_publisher)
+    
+    # 9. Clean up when spin is interrupted (e.g., by Ctrl+C)
     simple_publisher.destroy_node()
     rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
 ```
-
-#### Creating a Subscriber Node in Python
-
-This node subscribes to the `chatter` topic and prints the messages it receives.
-
-```python
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
-
-class SimpleSubscriber(Node):
-    def __init__(self):
-        super().__init__('simple_subscriber')
-        self.subscription = self.create_subscription(
-            String,
-            'chatter',
-            self.listener_callback,
-            10)
-        self.get_logger().info('Subscriber has been started.')
-
-    def listener_callback(self, msg):
-        self.get_logger().info(f'I heard: "{msg.data}"')
-
-def main(args=None):
-    rclpy.init(args=args)
-    simple_subscriber = SimpleSubscriber()
-    rclpy.spin(simple_subscriber)
-    simple_subscriber.destroy_node()
-    rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
-```
+The `rclpy.spin()` function is the heart of a ROS 2 node. It enters a loop, waiting for and executing any pending work, such as a timer firing or a message arriving on a subscribed topic.
 
 ### 2.3 The Service (Request-Response) Pattern
 
-Services are a request/response communication pattern, suitable for tasks that require a direct, synchronous exchange, like querying a database or triggering a specific action that completes quickly.
+While topics are great for streaming data, they aren't suitable for remote procedure calls (RPCs) where you need a direct, two-way exchange. For this, ROS provides **Services**. A service has two parts: a **request** and a **response**. One node acts as a service server, and another acts as a service client.
 
-#### Creating a Service Server Node
+#### Synchronous vs. Asynchronous Clients
+A key decision when using a service is whether the client should be synchronous or asynchronous.
+-   **Synchronous**: The client sends a request and *blocks*, waiting until the server sends a response. This is simpler to program but can freeze your node if the service takes a long time.
+-   **Asynchronous**: The client sends a request and immediately returns a "future" object. It can continue doing other work. It can periodically check if the future is complete or attach a callback function that will be executed when the response arrives. This is more complex but far more efficient.
 
-This node provides a service that adds two integers.
+The example in `simple_service_client.py` simulates a synchronous call by using `rclpy.spin_until_future_complete`.
 
-```python
-from example_interfaces.srv import AddTwoInts
-import rclpy
-from rclpy.node import Node
+### 2.4 Actions: For Long-Running, Preemptible Tasks
 
-class SimpleServiceServer(Node):
-    def __init__(self):
-        super().__init__('simple_service_server')
-        self.srv = self.create_service(AddTwoInts, 'add_two_ints', self.add_two_ints_callback)
-        self.get_logger().info('Service server has been started.')
+What happens when a task takes a long time and you need to monitor its progress or maybe cancel it? A service is a poor choice because it would block for too long. A topic doesn't provide feedback or a final result. This is the exact problem that **Actions** are designed to solve.
 
-    def add_two_ints_callback(self, request, response):
-        response.sum = request.a + request.b
-        self.get_logger().info(f'Incoming request\na: {request.a} b: {request.b}')
-        self.get_logger().info(f'Sending back response: {response.sum}')
-        return response
+An Action is the most complex communication type, perfect for goal-oriented, long-running behaviors like:
+- "Navigate to the kitchen."
+- "Rotate the robot 360 degrees."
+- "Pick up the red cube."
 
-def main(args=None):
-    rclpy.init(args=args)
-    simple_service_server = SimpleServiceServer()
-    rclpy.spin(simple_service_server)
-    rclpy.shutdown()
+The client can also send a cancel request at any time. This multi-part, non-blocking communication makes actions the ideal choice for any robotic task that isn't instantaneous.
 
-if __name__ == '__main__':
-    main()
-```
+### 2.5 ROS 2 CLI: Introspection and Debugging
 
-#### Creating a Service Client Node
+A deep understanding of the ROS 2 command-line interface (CLI) is essential for debugging. It allows you to inspect every part of a running ROS system.
 
-This node calls the `add_two_ints` service.
-
-```python
-import rclpy
-from rclpy.node import Node
-from example_interfaces.srv import AddTwoInts
-
-class SimpleServiceClient(Node):
-    def __init__(self):
-        super().__init__('simple_service_client')
-        self.client = self.create_client(AddTwoInts, 'add_two_ints')
-        while not self.client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('service not available, waiting again...')
-        self.req = AddTwoInts.Request()
-
-    def send_request(self, a, b):
-        self.req.a = a
-        self.req.b = b
-        return self.client.call_async(self.req)
-
-def main(args=None):
-    rclpy.init(args=args)
-    service_client = SimpleServiceClient()
-    future = service_client.send_request(5, 10)
-    rclpy.spin_until_future_complete(service_client, future)
-    response = future.result()
-    service_client.get_logger().info(f'Result of add_two_ints: {response.sum}')
-    service_client.destroy_node()
-    rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
-```
-
-### 2.4 ROS 2 CLI: Introspection and Debugging
-
-ROS 2 provides a powerful set of command-line tools to introspect and debug your ROS graph.
-
--   **`ros2 node list`**: Lists all active nodes.
--   **`ros2 topic list`**: Lists all active topics.
--   **`ros2 service list`**: Lists all active services.
--   **`ros2 action list`**: Lists all active actions.
--   **`ros2 topic echo <topic_name>`**: Prints messages published to a topic.
--   **`ros2 service call <service_name> <service_type> '<args>'`**: Calls a service from the command line.
-
-```
+-   `ros2 node list`: Lists all active nodes.
+-   `ros2 node info <node_name>`: Shows a node's publishers, subscribers, services, and actions.
+-   `ros2 topic list`: Lists all active topics.
+-   `ros2 topic echo <topic_name>`: Prints the full message data being published to a topic in real time.
+-   `ros2 topic hz <topic_name>`: Measures the publishing frequency of a topic.
+-   `ros2 topic pub <topic_name> <msg_type> '<args>'`: Publishes a single message to a topic from the command line.
+-   `ros2 service list`: Lists all active services.
+-   `ros2 service call <service_name> <service_type> '<args>'`: Calls a service from the command line.
+-   `ros2 action list`: Lists all active actions.
+-   `ros2 action send_goal <action_name> <action_type> '<args>'`: Sends a goal to an action server.
+-   `ros2 interface show <msg_type>`: Shows the fields of a message, service, or action type.
+-   `ros2 graph`: A powerful tool that can provide a text-based description of the graph connections. This output can be redirected to generate a visual diagram.

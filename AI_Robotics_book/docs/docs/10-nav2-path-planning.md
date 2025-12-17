@@ -12,6 +12,9 @@ sidebar_label: "10. Nav2 Path Planning"
 
 **Nav2** is the primary navigation framework for ROS 2. It is a powerful and flexible suite of modular ROS 2 packages designed to help a robot autonomously navigate from a starting pose to a goal pose in an environment. Unlike simpler navigation systems, Nav2 is built with a behavior tree-based executive, allowing for complex decision-making and robust error handling.
 
+![NAV2 Architecture](/img/NAV2.jpg)
+![NAV2 Path Planning](/img/NAV2.png)
+
 Key components of the Nav2 stack include:
 -   **Localization**: `amcl` (Adaptive Monte Carlo Localization) or `robot_localization` (EKF/UKF) to determine the robot's pose.
 -   **Costmaps**: `global_costmap` and `local_costmap` to represent the environment, including obstacles.

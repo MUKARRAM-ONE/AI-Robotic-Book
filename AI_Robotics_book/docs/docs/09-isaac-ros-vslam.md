@@ -20,6 +20,10 @@ Key features of Isaac ROS:
 
 ![AI Robot Brain Architecture](/img/module3-architecture.svg)
 
+![SLAM Visualization](/img/visualization_SLAm.jpg)
+![SLAM Flow Chart](/img/SLAM_Flow_chart.png)
+![SLAM Simple](/img/SLAM.png)
+
 ### 9.2 Visual SLAM (vSLAM)
 
 **SLAM (Simultaneous Localization and Mapping)** is a fundamental problem in robotics: how does a robot build a map of an unknown environment while simultaneously keeping track of its own location within that map? **Visual SLAM (vSLAM)** uses camera feeds as its primary sensor input.

@@ -1,1 +1,175 @@
-/* Custom CSS for Docusaurus site */
+/* Custom CSS for Docusaurus site - FictionLab-inspired theme */
+
+:root {
+  /* Brand colors - FictionLab style */
+  --ifm-color-primary: #f59e0b;
+  --ifm-color-primary-dark: #d97706;
+  --ifm-color-primary-darker: #b45309;
+  --ifm-color-primary-darkest: #92400e;
+  --ifm-color-primary-light: #fbbf24;
+  --ifm-color-primary-lighter: #fcd34d;
+  --ifm-color-primary-lightest: #fde68a;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #f59e0b;
+  --ifm-color-primary-dark: #d97706;
+  --ifm-color-primary-darker: #b45309;
+  --ifm-color-primary-darkest: #92400e;
+  --ifm-color-primary-light: #fbbf24;
+  --ifm-color-primary-lighter: #fcd34d;
+  --ifm-color-primary-lightest: #fde68a;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  
+  /* Dark theme backgrounds */
+  --ifm-background-color: #1a1a1a;
+  --ifm-navbar-background-color: #0f0f0f;
+  --ifm-footer-background-color: #0f0f0f;
+  --ifm-card-background-color: #242424;
+  --ifm-sidebar-background-color: #1a1a1a;
+  --ifm-toc-background-color: #1a1a1a;
+  
+  /* Text colors */
+  --ifm-font-color-base: #e5e5e5;
+  --ifm-heading-color: #ffffff;
+  --ifm-link-color: #f59e0b;
+  --ifm-link-hover-color: #fbbf24;
+  --ifm-menu-color: #a3a3a3;
+  --ifm-menu-color-active: #f59e0b;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: var(--ifm-navbar-background-color) !important;
+  border-bottom: 1px solid #2a2a2a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+}
+
+.navbar__brand {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.navbar__item {
+  color: #a3a3a3 !important;
+}
+
+.navbar__link:hover {
+  color: var(--ifm-color-primary) !important;
+}
+
+.navbar__link--active {
+  color: var(--ifm-color-primary) !important;
+}
+
+/* Sidebar styling */
+.menu {
+  background-color: var(--ifm-sidebar-background-color);
+  padding: 1rem;
+}
+
+.menu__link {
+  color: var(--ifm-menu-color);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.menu__link:hover {
+  background-color: #2a2a2a;
+  color: var(--ifm-color-primary);
+}
+
+.menu__link--active {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--ifm-color-primary);
+  border-left: 3px solid var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* Ensure the sidebar collapse/expand button is visible and themed */
+.theme-doc-sidebar-container .theme-doc-sidebar-collapse-button {
+  position: sticky;
+  bottom: 0;
+  background: #0f0f0f;
+  border: 1px solid #3a3a3a;
+  color: #f59e0b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.theme-doc-sidebar-container .theme-doc-sidebar-collapse-button:hover {
+  background: #1a1a1a;
+  border-color: #f59e0b;
+}
+
+/* Main content area */
+.main-wrapper {
+  background-color: var(--ifm-background-color);
+}
+
+article {
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+/* Code blocks */
+pre {
+  background-color: #0d0d0d !important;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+}
+
+code {
+  background-color: #2a2a2a;
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+}
+
+/* Table of contents (right sidebar) */
+.table-of-contents {
+  border-left: 1px solid #2a2a2a;
+}
+
+.table-of-contents__link {
+  color: var(--ifm-menu-color);
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+}
+
+/* Admonitions/Notes styling */
+.admonition {
+  border-left: 4px solid var(--ifm-color-primary);
+  background-color: rgba(245, 158, 11, 0.05);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--ifm-footer-background-color);
+  border-top: 1px solid #2a2a2a;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-primary);
+}

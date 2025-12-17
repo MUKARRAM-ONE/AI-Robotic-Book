@@ -11,7 +11,10 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "rag:setup": "cd ../rag_backend && python -m venv .venv && .venv/Scripts/activate && pip install -r requirements.txt",
+    "rag:ingest": "cd ../rag_backend && python ingest.py",
+    "rag:start": "cd ../rag_backend && python server.py"
   },
   "dependencies": {
     "@docusaurus/core": "2.4.1",

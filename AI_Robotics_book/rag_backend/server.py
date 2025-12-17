@@ -1,65 +1,145 @@
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import openai
-from qdrant_client import QdrantClient
+from rag_backend import RAGBackend
+from auth import auth_backend, fastapi_users, google_oauth_client_id, google_oauth_client_secret, github_oauth_client_id, github_oauth_client_secret, SECRET
+from database import create_db_and_tables, User
+from httpx_oauth.clients.google import GoogleOAuth2
+from httpx_oauth.clients.github import GitHubOAuth2
+from fastapi_users import schemas as fas
+
+
+class UserRead(fas.BaseUser[int]):
+    pass
+
+
+class UserCreate(fas.BaseUserCreate):
+    pass
+
+
+class UserUpdate(fas.BaseUserUpdate):
+    pass
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-QDRANT_URL = os.getenv('QDRANT_URL')
-QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
-COLLECTION = os.getenv('QDRANT_COLLECTION', 'ai_robotics_docs')
-CHAT_MODEL = os.getenv('CHAT_MODEL', 'gpt-3.5-turbo')
-TOP_K = int(os.getenv('TOP_K', '4'))
-
-openai.api_key = OPENAI_API_KEY
-client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, prefer_grpc=False)
-
-app = FastAPI(title='AI Robotics RAG Backend')
-
+# Define the request model
 class QueryRequest(BaseModel):
     query: str
 
-@app.post('/search')
-def search(req: QueryRequest):
-    q = req.query
-    if not q:
-        raise HTTPException(status_code=400, detail='Query required')
+# Initialize FastAPI app
+app = FastAPI(title='AI Robotics RAG Backend')
 
-    # 1) create embedding for query
-    emb = openai.Embedding.create(model=os.getenv('EMBEDDING_MODEL', 'text-embedding-3-small'), input=[q])['data'][0]['embedding']
+# Add CORS middleware to allow requests from the frontend
+# CORS: use explicit origins when sending credentials
+frontend_origins = os.getenv(
+    "FRONTEND_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000",
+)
+allowed = [o.strip() for o in frontend_origins.split(",") if o.strip()]
 
-    # 2) perform vector search
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize RAG backend
+try:
+    rag = RAGBackend()
+    print("✅ RAG Backend initialized successfully")
+except Exception as e:
+    print(f"⚠️  Warning: Could not initialize RAG backend: {e}")
+    rag = None
+
+google_oauth_client = GoogleOAuth2(google_oauth_client_id, google_oauth_client_secret)
+github_oauth_client = GitHubOAuth2(github_oauth_client_id, github_oauth_client_secret)
+
+
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
+)
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_reset_password_router(),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_verify_router(UserRead),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"],
+)
+app.include_router(
+    fastapi_users.get_oauth_router(google_oauth_client, auth_backend, SECRET, is_verified_by_default=True),
+    prefix="/auth/google",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_oauth_router(github_oauth_client, auth_backend, SECRET, is_verified_by_default=True),
+    prefix="/auth/github",
+    tags=["auth"],
+)
+
+
+@app.on_event("startup")
+async def on_startup():
+    # Not needed if you setup a migration system like Alembic
+    await create_db_and_tables()
+
+
+@app.post("/query")
+async def query_endpoint(req: QueryRequest, user: User = Depends(fastapi_users.current_user(active=True, optional=False))):
+    """
+    Receives a query and returns AI-generated answer with sources.
+    """
+    print(f"Query endpoint called by user: {user.email if user else 'Anonymous'}")
+    
+    if not rag:
+        raise HTTPException(
+            status_code=503,
+            detail="RAG backend not initialized. Please check your .env configuration."
+        )
+
     try:
-        hits = client.search(collection_name=COLLECTION, query_vector=emb, limit=TOP_K)
+        result = rag.search_and_generate(req.query)
+        print(f"Query result: {result}")
+        return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f'Error querying Qdrant: {e}')
+        print(f"Error processing query: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error processing query: {str(e)}"
+        )
 
-    context_parts = []
-    for h in hits:
-        payload = h.payload or {}
-        text = payload.get('text') or payload.get('content') or str(payload)
-        src = payload.get('source', '')
-        context_parts.append(f"Source: {src}\n{text}\n---\n")
 
-    context = '\n'.join(context_parts)
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    status = "healthy" if rag else "degraded"
+    return {
+        "status": status,
+        "message": "RAG Backend is running" if rag else "RAG Backend not initialized"
+    }
 
-    # 3) call OpenAI chat completion with context
-    messages = [
-        {"role": "system", "content": "You are an assistant that answers questions based on provided documentation context."},
-        {"role": "user", "content": f"Context:\n{context}\nQuestion: {q}"}
-    ]
 
-    try:
-        resp = openai.ChatCompletion.create(model=CHAT_MODEL, messages=messages, max_tokens=512, temperature=0.1)
-        answer = resp['choices'][0]['message']['content'].strip()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f'LLM error: {e}')
-
-    return {"query": q, "answer": answer, "sources": [h.payload for h in hits]}
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     import uvicorn
-    uvicorn.run('server:app', host='0.0.0.0', port=8000, reload=True)
+    port = int(os.getenv("SERVER_PORT", "8001"))
+    host = os.getenv("SERVER_HOST", "0.0.0.0")
+    print(f"🚀 Starting server on {host}:{port}")
+    uvicorn.run(app, host=host, port=port, log_level="info")

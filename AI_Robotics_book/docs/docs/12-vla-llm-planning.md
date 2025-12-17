@@ -8,6 +8,11 @@ sidebar_label: "12. Cognitive Planning with LLMs"
 
 **Objective**: Use a Large Language Model to translate a high-level goal into a sequence of robot actions.
 
+![VLA Sequence Diagram](/img/module4-vla-sequence.svg)
+![VLA Architecture](/img/VLA.jpg)
+![VLA Flow](/img/VLA Arch.webp)
+![Open VLA](/img/OPEN_VLA.jpg)
+
 ### 12.1 Introduction to LLMs in Robotics
 
 Large Language Models (LLMs) have emerged as powerful tools for understanding and generating human language. Their ability to comprehend complex instructions, infer intent, and generate coherent text makes them incredibly valuable for extending the cognitive capabilities of robots. In the context of robotics, LLMs can act as a "high-level brain," translating abstract human commands into concrete, executable sequences of robot actions.

@@ -1,21 +1,24 @@
 import os
 import glob
 import uuid
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from tqdm import tqdm
-import openai
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from fastembed import TextEmbedding
 
-load_dotenv()
+# Load .env from the current folder or parent repository root if present
+load_dotenv()  # load local .env if exists
+env_path = find_dotenv(filename='.env', usecwd=True)
+if env_path:
+    load_dotenv(env_path, override=False)
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 QDRANT_URL = os.getenv('QDRANT_URL')
 QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
 COLLECTION = os.getenv('QDRANT_COLLECTION', 'ai_robotics_docs')
-EMBED_MODEL = os.getenv('EMBEDDING_MODEL', 'text-embedding-3-small')
-
-openai.api_key = OPENAI_API_KEY
+EMBED_MODEL = 'BAAI/bge-small-en'
+VECTOR_SIZE = 384  # for BAAI/bge-small-en
 
 def read_markdown_files(docs_path):
     files = glob.glob(os.path.join(docs_path, '*.md'))
@@ -26,32 +29,31 @@ def read_markdown_files(docs_path):
         docs.append({'id': os.path.basename(path), 'content': text})
     return docs
 
-def chunk_text(text, chunk_size=1000, overlap=200):
-    # simple character-based chunking
-    chunks = []
-    start = 0
-    while start < len(text):
-        end = min(start + chunk_size, len(text))
-        chunks.append(text[start:end])
-        start += chunk_size - overlap
+def chunk_text(text, chunk_size=512, chunk_overlap=50):
+    """Chunks text by characters."""
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
+        length_function=len
+    )
+    chunks = text_splitter.split_text(text)
     return chunks
 
 def create_collection_if_not_exists(client: QdrantClient, collection: str, vector_size: int):
-    try:
-        if collection not in [c.name for c in client.get_collections().collections]:
-            client.recreate_collection(collection_name=collection, vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE))
-    except Exception:
-        # fallback recreate
-        client.recreate_collection(collection_name=collection, vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE))
-
-def embed_texts(texts):
-    # use OpenAI embeddings
-    resp = openai.Embedding.create(model=EMBED_MODEL, input=texts)
-    return [e['embedding'] for e in resp['data']]
+    # Recreate collection every time to ensure consistency
+    client.recreate_collection(
+        collection_name=collection, 
+        vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE)
+    )
 
 def ingest(docs_path: str = '../docs/docs'):
+    print('Loading embedding model... This may take a moment.')
+    embedding_model = TextEmbedding(model_name=EMBED_MODEL)
+
     print('Connecting to Qdrant...')
     client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, prefer_grpc=False)
+
+    create_collection_if_not_exists(client, COLLECTION, VECTOR_SIZE)
 
     docs = read_markdown_files(docs_path)
     items = []
@@ -63,14 +65,9 @@ def ingest(docs_path: str = '../docs/docs'):
     # compute embedding in batches
     texts = [it['text'] for it in items]
     print(f'Creating embeddings for {len(texts)} chunks...')
-    batch_size = 32
-    vectors = []
-    for i in tqdm(range(0, len(texts), batch_size)):
-        batch = texts[i:i+batch_size]
-        vectors.extend(embed_texts(batch))
-
-    vector_size = len(vectors[0])
-    create_collection_if_not_exists(client, COLLECTION, vector_size)
+    
+    # Fastembed's embed method handles batching automatically
+    vectors = embedding_model.embed(texts, batch_size=32)
 
     points = []
     for it, vec in zip(items, vectors):

@@ -14,6 +14,9 @@ sidebar_label: "11. Voice-to-Action with Whisper"
 
 **Automatic Speech Recognition (ASR)** is the technology that allows computers to understand spoken language. It converts audio signals into text. ASR is a critical component for natural human-robot interaction, enabling robots to respond to voice commands, participate in conversations, and understand their environment through auditory cues.
 
+![Speech Recognition System](/img/speech_rocgnation.png)
+![How Speech Recognition Works](/img/how_seech_recognation_system.webp)
+
 The ASR pipeline typically involves:
 1.  **Audio Capture**: Recording sound from a microphone.
 2.  **Feature Extraction**: Converting raw audio into meaningful features (e.g., spectrograms).

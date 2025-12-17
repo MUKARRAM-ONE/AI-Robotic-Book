@@ -18,6 +18,8 @@ sidebar_label: "8. NVIDIA Isaac Sim Introduction"
 -   **Synthetic Data Generation**: The ability to programmatically generate vast amounts of labeled data for training perception models.
 -   **ROS 2 and Omniverse Kit SDK**: Seamless integration with ROS 2 and extensibility through Python APIs.
 
+![NVIDIA Model of Isaac Sim](/img/nvidia_model_of_isaac_sim.jpg)
+
 ### 8.2 Isaac Sim Interface
 
 Once you have Isaac Sim installed via the Omniverse Launcher, launching it will present you with a complex but powerful interface:

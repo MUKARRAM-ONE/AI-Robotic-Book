@@ -28,11 +28,7 @@ const config = {
     locales: ['en'],
   },
 
-  // Custom fields are accessible in the site via useDocusaurusContext().siteConfig.customFields
-  customFields: {
-    // Set this to your running RAG backend URL (no trailing slash), e.g. https://your-backend.example.com
-    ragApiUrl: '',
-  },
+  plugins: [require.resolve('./my-proxy-plugin.js')],
 
   presets: [
     [
@@ -59,6 +55,19 @@ const config = {
     ({
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
+      // Docs-specific theme options
+      docs: {
+        sidebar: {
+          hideable: true,
+          autoCollapseCategories: true,
+        },
+      },
+      // Set dark mode as default
+      colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: false,
+        respectPrefersColorScheme: false,
+      },
       navbar: {
         title: 'Physical AI & Humanoid Robotics',
         logo: {

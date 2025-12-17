@@ -1,135 +1,192 @@
 ---
 id: 03-python-rclpy-integration
-title: "Chapter 3: Python Integration with rclpy"
-sidebar_label: "3. Python Integration with rclpy"
+title: "Chapter 3: Building Applications with rclpy"
+sidebar_label: "3. Building with rclpy"
 ---
 
-## Chapter 3: Python Integration with rclpy
+## Chapter 3: Building Applications with rclpy
 
-**Objective**: Master the creation of custom ROS 2 applications using the `rclpy` library.
+**Objective**: Master the creation of custom ROS 2 packages, nodes, and launch files using the `rclpy` (ROS Client Library for Python) library.
 
-### 3.1 Creating a ROS 2 Package
+### 3.1 The ROS 2 Workspace and Package Structure
 
-A ROS 2 package is a directory with a specific structure that contains your nodes, launch files, custom message definitions, and a `package.xml` manifest file.
+Before writing code, it's crucial to understand how ROS 2 organizes projects. All your code should live within a **workspace**, which is essentially a directory containing your ROS 2 packages. A typical workspace has the following structure:
 
-To create a new package, you can use the `ros2 pkg create` command:
+-   `ros2_ws/` (your workspace root)
+    -   `src/`: This is where you place the source code for all your ROS 2 packages.
+    -   `build/`: An intermediate directory where `colcon` (the ROS 2 build tool) processes your packages.
+    -   `install/`: The final destination for your built packages, including executables and setup files.
+    -   `log/`: Contains logs from the build process.
 
+#### Creating a Python Application Package
+A ROS 2 **Package** is a directory containing your nodes, launch files, interface definitions, and a manifest file. It's the fundamental unit of software organization in ROS. For a Python-based application, we create an `ament_python` package.
+
+From within your `ros2_ws/src` directory, run:
 ```bash
-cd ~/ros2_ws/src
-ros2 pkg create --build-type ament_python --node-name my_first_node my_robot_tutorials
+ros2 pkg create --build-type ament_python --node-name battery_monitor my_robot_app
+```
+This creates a package named `my_robot_app` with a sample node named `battery_monitor`. Let's examine the key generated files:
+
+-   `package.xml`: The package manifest. It contains meta-information like the package name, version, author, and, most importantly, its dependencies. For example, you must list which other ROS 2 packages you `depend` on.
+-   `setup.py`: The Python setup script. Its primary role is to define the `entry_points` for your nodes. This is how ROS 2 knows that a name like `battery_monitor` corresponds to a function in a specific Python file, making it an executable.
+-   `setup.cfg`: A configuration file for `setup.py`.
+
+#### Creating a Custom Interface Package
+A core principle of ROS is **separating interfaces from implementation**. Your custom message, service, and action definitions should live in their own dedicated package. This package must be a `ament_cmake` package, even if you are only using it with Python nodes.
+
+From `ros2_ws/src`, create a second package for our interfaces:
+```bash
+ros2 pkg create --build-type ament_cmake my_robot_interfaces
+```
+This package requires special configuration:
+1.  **In `package.xml`**, you must add dependencies that give your package the ability to generate code from interface files:
+    ```xml
+    <buildtool_depend>rosidl_default_generators</buildtool_depend>
+    <depend>rosidl_default_runtime</depend>
+    <member_of_group>rosidl_interface_packages</member_of_group>
+    ```
+2.  **In `CMakeLists.txt`**, you must tell the build system to find the generator and which files to turn into code:
+    ```cmake
+    find_package(rosidl_default_generators REQUIRED)
+
+    rosidl_generate_interfaces(${PROJECT_NAME}
+      "msg/BatteryState.msg"
+    )
+    ```
+3.  **In `my_robot_app/package.xml`**, you must add a dependency on your new interface package:
+    ```xml
+    <depend>my_robot_interfaces</depend>
+    ```
+
+Now, create a `msg` directory inside `my_robot_interfaces` and add the following file:
+
+**`my_robot_interfaces/msg/BatteryState.msg`**
+```
+std_msgs/Header header
+float32 voltage
+float32 percentage
+bool is_charging
 ```
 
-This command creates a new directory `my_robot_tutorials` with the following structure:
+#### Building the Workspace
+To build your packages, navigate to the root of your workspace (`ros2_ws`) and run:
+```bash
+colcon build
+```
+`colcon` will automatically discover your packages and build them in the correct order, building `my_robot_interfaces` first. After a successful build, you must source the new setup file in the `install` directory to make your new packages and messages available in your terminal:
+```bash
+source install/setup.bash
+```
 
--   `package.xml`: An XML file containing meta-information about the package, such as its name, version, author, and dependencies.
--   `setup.py`: A Python script for installing the package and its executables.
--   `setup.cfg`: A configuration file for the `setup.py` script.
--   `my_robot_tutorials/`: The Python package directory containing your node scripts.
-    -   `my_first_node.py`: A basic, empty node script.
--   `resource/`: A directory to mark the package location.
--   `test/`: A directory for your package's tests.
+### 3.2 Writing a Custom Node with `rclpy`
 
-### 3.2 Writing a Custom Node
-
-A ROS 2 node is typically structured as a Python class that inherits from `rclpy.node.Node`. This provides access to all the necessary ROS 2 functionality.
-
-Let's modify the `my_first_node.py` script to create a node that publishes the robot's simulated battery level.
+Let's rewrite our `battery_monitor` node to use our new custom message. Using a class that inherits from `rclpy.node.Node` is the standard way to structure a node, as it helps manage state and organize communication callbacks.
 
 ```python
-# In my_robot_tutorials/my_first_node.py
+# In my_robot_app/my_robot_app/battery_monitor.py
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float32
+from my_robot_interfaces.msg import BatteryState # Import our custom message
 
 class BatteryMonitorNode(Node):
     def __init__(self):
         super().__init__('battery_monitor')
-        self.publisher_ = self.create_publisher(Float32, 'battery_level', 10)
+        # Note the change from Float32 to BatteryState
+        self.publisher_ = self.create_publisher(BatteryState, 'battery_level', 10)
         self.timer = self.create_timer(1.0, self.publish_battery_level)
         self.battery_level_ = 100.0
         self.get_logger().info('Battery Monitor node started.')
 
     def publish_battery_level(self):
-        msg = Float32()
-        msg.data = self.battery_level_
+        # Create an instance of our custom message
+        msg = BatteryState()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.voltage = 12.5 - ( (100.0 - self.battery_level_) / 100.0 * 2.5 )
+        msg.percentage = self.battery_level_
+        msg.is_charging = False
+        
         self.publisher_.publish(msg)
         self.get_logger().info(f'Publishing battery level: {self.battery_level_:.2f}%')
-        self.battery_level_ -= 0.1 # Simulate battery drain
-        if self.battery_level_ < 0:
-            self.battery_level_ = 100.0 # Reset
-```
-
-### 3.3 Parameter Management
-
-Parameters allow you to configure your nodes externally without changing the code. You can declare, set, and get parameters.
-
-Let's modify our `BatteryMonitorNode` to use a parameter for the battery drain rate.
-
-```python
-# In my_robot_tutorials/my_first_node.py
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import Float32
-
-class BatteryMonitorNode(Node):
-    def __init__(self):
-        super().__init__('battery_monitor')
-        # Declare parameter for drain rate
-        self.declare_parameter('drain_rate', 0.1)
-        self.drain_rate_ = self.get_parameter('drain_rate').get_parameter_value().double_value
-
-        self.publisher_ = self.create_publisher(Float32, 'battery_level', 10)
-        self.timer = self.create_timer(1.0, self.publish_battery_level)
-        self.battery_level_ = 100.0
-        self.get_logger().info(f'Battery Monitor node started with drain rate: {self.drain_rate_}.')
-
-    def publish_battery_level(self):
-        msg = Float32()
-        msg.data = self.battery_level_
-        self.publisher_.publish(msg)
-        self.get_logger().info(f'Publishing battery level: {self.battery_level_:.2f}%')
-        self.battery_level_ -= self.drain_rate_
+        self.battery_level_ -= 0.1
         if self.battery_level_ < 0:
             self.battery_level_ = 100.0
 ```
 
-You can then run this node and set the parameter from the command line:
+### 3.3 Advanced Parameter Management
+Hardcoding values like the battery drain rate is bad practice. Parameters make your nodes reusable and configurable.
 
-```bash
-ros2 run my_robot_tutorials my_first_node --ros-args -p drain_rate:=0.5
-```
+*[Image: A diagram showing the parameter override hierarchy. A value from a YAML file is overridden by a value in a launch file, which is in turn overridden by a value from the command line (`ros2 param set`).]*
 
-### 3.4 Launch Files
-
-Launch files (`.launch.py`) allow you to start and configure multiple nodes at once. This is essential for managing complex robotic systems.
-
-Here's an example of a launch file that starts our `BatteryMonitorNode` and a simple subscriber node to monitor it.
+Let's add a parameter for the drain rate and a dynamic callback to update it on the fly.
 
 ```python
-# In my_robot_tutorials/my_launch.launch.py
+# In my_robot_app/my_robot_app/battery_monitor.py, updated __init__
+def __init__(self):
+    super().__init__('battery_monitor')
+    
+    # Declare the parameter and its default value
+    self.declare_parameter('drain_rate', 0.1)
+    
+    # Get the initial value
+    self.drain_rate_ = self.get_parameter('drain_rate').get_parameter_value().double_value
+    
+    # Add a callback for when parameters are changed
+    self.add_on_set_parameters_callback(self.parameter_callback)
+
+    # ... (rest of __init__)
+
+# Add the callback method to the class
+def parameter_callback(self, params):
+    for param in params:
+        if param.name == 'drain_rate':
+            self.drain_rate_ = param.value
+            self.get_logger().info(f'Drain rate updated to: {self.drain_rate_}')
+    return rclpy.parameter.Parameter.SetParametersResult(successful=True)
+```
+Now, you can change the drain rate while the node is running with the command:
+`ros2 param set /battery_monitor drain_rate 0.5`
+
+#### Using YAML for Parameters
+For complex systems, you should store parameters in a YAML file.
+
+**`my_robot_app/config/params.yaml`**
+```yaml
+battery_monitor:
+  ros__parameters:
+    drain_rate: 0.2
+```
+
+### 3.4 Python Launch Files
+Launch files are Python scripts that allow you to start and configure a complex system of multiple nodes at once. They are the standard way to run a ROS 2 application.
+
+Let's create a launch file that starts our battery monitor and loads its parameters from our YAML file.
+
+```python
+# In my_robot_app/launch/my_launch.launch.py
+import os
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
 def generate_launch_description():
+    # Get the path to our parameter file
+    config = os.path.join(
+        get_package_share_directory('my_robot_app'),
+        'config',
+        'params.yaml'
+    )
+
     return LaunchDescription([
         Node(
-            package='my_robot_tutorials',
-            executable='my_first_node',
+            package='my_robot_app',
+            executable='battery_monitor',
             name='battery_monitor',
-            parameters=[{'drain_rate': 0.25}]
+            parameters=[config] # Pass the config file to the node
         ),
-        Node(
-            package='my_robot_tutorials',
-            executable='my_subscriber_node', # Assuming you have a subscriber node
-            name='battery_display'
-        )
+        # You could add other nodes here
     ])
 ```
+You would then need to update `setup.py` to tell ROS 2 where to find this launch file. Finally, you can run everything with a single command:
+`ros2 launch my_robot_app my_launch.launch.py`
 
-To run this launch file:
-
-```bash
-ros2 launch my_robot_tutorials my_launch.launch.py
-```
-
-This chapter has provided the foundational skills for creating custom ROS 2 applications with Python. With this knowledge, you are now ready to build more complex robotic behaviors.
+This chapter provides the foundational skills for creating complete, configurable, and reusable ROS 2 applications with Python.

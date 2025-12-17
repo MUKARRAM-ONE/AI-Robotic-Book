@@ -1,0 +1,38 @@
+/* FictionLab-inspired Navbar Layout */
+
+.navbarWithSearch {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchBarContainer {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive design */
+@media (max-width: 996px) {
+  .searchBarContainer {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin: 0.75rem 1rem;
+    width: calc(100% - 2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .searchBarContainer {
+    margin: 0.5rem 1rem;
+  }
+}

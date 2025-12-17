@@ -1,0 +1,112 @@
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import styles from './PaywallGate.module.css';
+
+const PaywallGate = ({ children }) => {
+  const { user, loading } = useAuth();
+  const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [showPaywall, setShowPaywall] = useState(false);
+
+  useEffect(() => {
+    const path = typeof window !== 'undefined' ? window.location.pathname : '';
+    const isHome = path === '/' || path === '/AI-driven-development' || path === '/AI-driven-development/';
+    const isAuth = path.startsWith('/AI-driven-development/auth') || path.startsWith('/auth');
+
+    // Do not enforce paywall on homepage or auth pages
+    if (isHome || isAuth) {
+      setShowPaywall(false);
+      return;
+    }
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollPercentage(scrolled);
+
+      // Lock paywall after 40% scroll for unauthenticated users (non-dismissable)
+      if (scrolled > 40 && !user) {
+        setShowPaywall(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Run once after load to catch cases where user already scrolled past threshold
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [user]);
+
+  // Disable background scroll when paywall is active and user not authenticated
+  useEffect(() => {
+    if (showPaywall && !user) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [showPaywall, user]);
+
+  const path = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isHome = path === '/' || path === '/AI-driven-development' || path === '/AI-driven-development/';
+  const isAuth = path.startsWith('/AI-driven-development/auth') || path.startsWith('/auth');
+
+  // If loading or public pages, just render content
+  if (loading || isHome || isAuth || user) return <div>{children}</div>;
+
+  const handleLoginClick = () => {
+    window.location.href = '/AI-driven-development/auth?action=login';
+  };
+
+  const handleSignupClick = () => {
+    window.location.href = '/AI-driven-development/auth?action=signup';
+  };
+
+  return (
+    <div className={styles.contentWrapper}>
+      <div className={`${styles.contentArea} ${showPaywall && !user ? styles.blurred : ''}`}>
+        {children}
+      </div>
+
+      {showPaywall && !user && (
+        <div className={styles.paywallOverlay}>
+          <div className={styles.paywallModal}>
+            <div className={styles.paywallContent}>
+              <h2>Continue Reading</h2>
+              <p>Sign in to unlock full access to this educational content.</p>
+              
+              <div className={styles.authButtons}>
+                <button 
+                  className={styles.loginBtn}
+                  onClick={handleLoginClick}
+                >
+                  Sign In
+                </button>
+                <button 
+                  className={styles.signupBtn}
+                  onClick={handleSignupClick}
+                >
+                  Create Account
+                </button>
+              </div>
+
+              <div className={styles.benefits}>
+                <h4>Benefits of signing in:</h4>
+                <ul>
+                  <li>📚 Full access to all chapters</li>
+                  <li>🔍 Access to RAG-powered search</li>
+                  <li>💬 Community discussions</li>
+                  <li>📊 Progress tracking</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PaywallGate;
