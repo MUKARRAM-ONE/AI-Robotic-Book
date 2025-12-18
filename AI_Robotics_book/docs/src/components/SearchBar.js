@@ -56,7 +56,7 @@ export default function SearchBar({ navbar = false }) {
     setShowResults(true);
 
     try {
-      const ragApiUrl = siteConfig.customFields.ragApiUrl || 'http://localhost:8001';
+      const ragApiUrl = siteConfig.customFields.ragApiUrl || 'http://20.197.8.180';
       const response = await fetch(`${ragApiUrl}/query`, {
         method: 'POST',
         headers: {
