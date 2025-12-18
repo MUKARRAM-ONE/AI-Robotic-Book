@@ -11,7 +11,7 @@ const Signup = () => {
   const [success, setSuccess] = useState('');
   const [retries, setRetries] = useState(0);
   const history = useHistory();
-  const API_URL = 'http://localhost:8001';
+  const API_URL = 'http://20.197.8.180';
 
   const handleSignup = async (e) => {
     e.preventDefault();
