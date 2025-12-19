@@ -5,7 +5,7 @@ from fastapi import Depends, Request
 from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import (
     AuthenticationBackend,
-    CookieTransport,
+    BearerTransport,
     JWTStrategy,
 )
 from fastapi_users.manager import BaseUserManager, IntegerIDMixin
@@ -22,11 +22,13 @@ def get_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(secret=SECRET, lifetime_seconds=3600)
 
 
-cookie_transport = CookieTransport(cookie_name="bonds", cookie_max_age=3600)
+# Use Bearer token transport so frontend can send Authorization header
+# and receive {"access_token": "..."} from /auth/jwt/login
+bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
 
 auth_backend = AuthenticationBackend(
     name="jwt",
-    transport=cookie_transport,
+    transport=bearer_transport,
     get_strategy=get_jwt_strategy,
 )
 
