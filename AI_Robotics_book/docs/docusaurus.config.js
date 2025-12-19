@@ -11,14 +11,14 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://ai-driven-development.github.io',
+  url: 'https://mukarram-one.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/AI-driven-development/',
 
   // GitHub pages deployment config.
-  organizationName: 'ai-driven-development', // Usually your GitHub org/user name.
-  projectName: 'AI_Robotics_book', // Usually your repo name.
+  organizationName: 'mukarram-one', // Usually your GitHub org/user name.
+  projectName: 'AI-driven-development', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
