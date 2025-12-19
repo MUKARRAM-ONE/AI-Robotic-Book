@@ -11,7 +11,7 @@ const Signup = () => {
   const [success, setSuccess] = useState('');
   const [retries, setRetries] = useState(0);
   const history = useHistory();
-  const API_URL = 'https://erin-lensless-slushily.ngrok-free.dev';
+  const API_URL = 'http://my-rag-server.centralindia.cloudapp.azure.com:8001';
 
   const handleSignup = async (e) => {
     e.preventDefault();

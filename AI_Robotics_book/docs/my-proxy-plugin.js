@@ -7,7 +7,7 @@ module.exports = function (context, options) {
           devServer: {
             proxy: {
               '/api': {
-                target: 'http://localhost:8001',
+                target: 'https://<your-ngrok-url>',
                 pathRewrite: { '^/api': '' },
                 secure: false,
                 changeOrigin: true,

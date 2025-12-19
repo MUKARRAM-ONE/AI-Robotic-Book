@@ -148,7 +148,7 @@ const config = {
       },
     }),
   customFields: {
-    ragApiUrl: 'https://erin-lensless-slushily.ngrok-free.dev',
+    ragApiUrl: 'http://my-rag-server.centralindia.cloudapp.azure.com:8001',
   },
 };
 
