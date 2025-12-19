@@ -11,16 +11,18 @@ const Login = () => {
   const history = useHistory();
   const API_URL = 'https://my-rag-server.centralindia.cloudapp.azure.com';
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const attemptLogin = async () => {
     setLoading(true);
     setError('');
-    
+
     try {
       const response = await fetch(`${API_URL}/auth/jwt/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        // Using Bearer tokens; cookies not required
         body: new URLSearchParams({
           username: email,
           password: password,
@@ -29,11 +31,9 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // Store the JWT token
         if (data.access_token) {
           localStorage.setItem('access_token', data.access_token);
         }
-        // Reload to fetch user info
         window.location.href = '/AI-driven-development/docs/01-intro-to-ros2';
       } else {
         let detail = 'Login failed. Please check your credentials.';
@@ -47,13 +47,18 @@ const Login = () => {
       if (!tried) {
         setTried(true);
         setError('Connecting to the server… retrying');
-        setTimeout(() => handleLogin(e), 800);
+        setTimeout(() => attemptLogin(), 800);
         return;
       }
-      setError('Cannot reach the server. Please start the backend on port 8001 and try again.');
+      setError('Cannot reach the server. Please ensure the backend is reachable at the configured HTTPS URL.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await attemptLogin();
   };
 
   return (
