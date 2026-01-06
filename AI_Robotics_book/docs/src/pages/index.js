@@ -619,7 +619,7 @@ export default function Home() {
               Start Learning →
             </a>
             <a 
-              href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book" 
+              href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main/AI_Robotics_book/docs" 
               style={{...styles.button, ...styles.buttonSecondary}}
               className="button-secondary"
             >
@@ -710,7 +710,7 @@ export default function Home() {
         <p style={styles.contactText}>Have questions? Reach out via GitHub, LinkedIn, or send a quick message.</p>
         <div style={styles.contactButtons}>
           <a 
-            href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book" 
+            href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main/AI_Robotics_book/docs" 
             target="_blank" 
             rel="noreferrer" 
             style={{...styles.button, ...styles.buttonSecondary}}

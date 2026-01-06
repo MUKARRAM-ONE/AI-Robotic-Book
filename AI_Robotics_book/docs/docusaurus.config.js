@@ -135,7 +135,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main',
+                href: 'https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main/AI_Robotics_book/docs',
               },
             ],
           },
