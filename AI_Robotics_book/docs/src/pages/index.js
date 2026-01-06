@@ -612,7 +612,7 @@ export default function Home() {
           </p>
           <div style={styles.heroButtons} className="hero-buttons">
             <a 
-              href="/docs/01-intro-to-ros2" 
+              href="/AI-Robotic-Book/docs/01-intro-to-ros2" 
               style={{...styles.button, ...styles.buttonPrimary}}
               className="button-primary"
             >
@@ -626,14 +626,14 @@ export default function Home() {
               View on GitHub
             </a>
             <a
-              href="/auth?action=login"
+              href="/AI-Robotic-Book/auth?action=login"
               style={{...styles.button, ...styles.buttonSecondary}}
               className="button-secondary"
             >
               Sign In
             </a>
             <a
-              href="/auth?action=signup"
+              href="/AI-Robotic-Book/auth?action=signup"
               style={{...styles.button, ...styles.buttonPrimary}}
               className="button-primary"
             >
@@ -696,7 +696,7 @@ export default function Home() {
         <h2 style={styles.ctaTitle}>Ready to Build Intelligent Robots?</h2>
         <p style={styles.ctaText}>Start with the fundamentals and progress to building your own autonomous systems.</p>
         <a 
-          href="/docs/01-intro-to-ros2" 
+          href="/AI-Robotic-Book/docs/01-intro-to-ros2" 
           style={{...styles.button, ...styles.buttonPrimary, fontSize: '1.2rem', padding: '18px 48px'}}
           className="button-primary"
         >
