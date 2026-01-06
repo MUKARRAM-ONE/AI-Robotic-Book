@@ -619,21 +619,21 @@ export default function Home() {
               Start Learning →
             </a>
             <a 
-              href="https://github.com/MUKARRAM-ONE/AI-driven-development/tree/main/AI_Robotics_book" 
+              href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book" 
               style={{...styles.button, ...styles.buttonSecondary}}
               className="button-secondary"
             >
               View on GitHub
             </a>
             <a
-              href="/AI-driven-development/auth?action=login"
+              href="/auth?action=login"
               style={{...styles.button, ...styles.buttonSecondary}}
               className="button-secondary"
             >
               Sign In
             </a>
             <a
-              href="/AI-driven-development/auth?action=signup"
+              href="/auth?action=signup"
               style={{...styles.button, ...styles.buttonPrimary}}
               className="button-primary"
             >
@@ -710,7 +710,7 @@ export default function Home() {
         <p style={styles.contactText}>Have questions? Reach out via GitHub, LinkedIn, or send a quick message.</p>
         <div style={styles.contactButtons}>
           <a 
-            href="https://github.com/MUKARRAM-ONE/AI-driven-development" 
+            href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book" 
             target="_blank" 
             rel="noreferrer" 
             style={{...styles.button, ...styles.buttonSecondary}}

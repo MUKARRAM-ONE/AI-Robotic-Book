@@ -123,7 +123,7 @@ const Signup = () => {
         </div>
         
         <p className={styles.toggleAuth}>
-          Already have an account? <a href="/AI-driven-development/auth?action=login">Sign in</a>
+          Already have an account? <a href="/auth?action=login">Sign in</a>
         </p>
       </div>
     </div>

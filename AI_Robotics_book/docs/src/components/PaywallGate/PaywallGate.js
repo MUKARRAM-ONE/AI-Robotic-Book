@@ -58,11 +58,11 @@ const PaywallGate = ({ children }) => {
   if (loading || isHome || isAuth || user) return <div>{children}</div>;
 
   const handleLoginClick = () => {
-    window.location.href = '/AI-driven-development/auth?action=login';
+    window.location.href = '/auth?action=login';
   };
 
   const handleSignupClick = () => {
-    window.location.href = '/AI-driven-development/auth?action=signup';
+    window.location.href = '/auth?action=signup';
   };
 
   const handleContinueGuest = () => {

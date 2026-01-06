@@ -101,7 +101,7 @@ const AuthButton = () => {
       ) : (
         <>
           <a
-            href="/AI-driven-development/auth?action=login"
+            href="/auth?action=login"
             style={{
               padding: '6px 12px',
               border: '2px solid #ff6b35',
@@ -125,7 +125,7 @@ const AuthButton = () => {
             Sign In
           </a>
           <a
-            href="/AI-driven-development/auth?action=signup"
+            href="/auth?action=signup"
             style={{
               padding: '6px 12px',
               background: '#ff6b35',

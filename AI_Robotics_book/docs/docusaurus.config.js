@@ -108,7 +108,7 @@ const config = {
             items: [
               {
                 label: 'GitHub (repo)',
-                href: 'https://github.com/MUKARRAM-ONE/AI-driven-development',
+                href: 'https://github.com/MUKARRAM-ONE/AI-Robotic-Book',
               },
               {
                 label: 'LinkedIn',
@@ -135,7 +135,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/MUKARRAM-ONE/AI-driven-development/tree/main/AI_Robotics_book',
+                href: 'https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main',
               },
             ],
           },
