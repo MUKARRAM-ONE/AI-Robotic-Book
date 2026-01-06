@@ -104,7 +104,7 @@ const Login = () => {
         </div>
         
         <p className={styles.toggleAuth}>
-          Don't have an account? <a href="/auth?action=signup">Sign up</a>
+          Don't have an account? <a href="/AI-Robotic-Book/auth?action=signup">Sign up</a>
         </p>
       </div>
     </div>
