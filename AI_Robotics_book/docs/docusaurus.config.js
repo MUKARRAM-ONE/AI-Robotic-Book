@@ -11,10 +11,10 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://mukarram-one.github.io',
+  url: 'https://MUKARRAM-ONE.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/AI-driven-development/',
+  baseUrl: '/AI-Robotic-Book/',
 
   // GitHub pages deployment config.
   organizationName: 'mukarram-one', // Usually your GitHub org/user name.
