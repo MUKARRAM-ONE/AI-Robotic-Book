@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redirecting...</title>
+  <script>
+    // SPA Routing for GitHub Pages
+    // This file handles routing for client-side navigation
+    var pathSegments = window.location.pathname.split('/').filter(Boolean);
+    var baseUrl = '/AI-Robotic-Book';
+    
+    // Store the path to be handled by React Router
+    sessionStorage.redirect = window.location.pathname;
+    
+    // Redirect to home page
+    window.location.href = baseUrl + '/';
+  </script>
+</head>
+<body>
+  Redirecting...
+</body>
+</html>
