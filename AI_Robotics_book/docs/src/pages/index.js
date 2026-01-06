@@ -6,19 +6,6 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  // Handle GitHub Pages 404 redirect on client side
-  useEffect(() => {
-    // Check for redirect parameter (from 404.html)
-    const params = new URLSearchParams(window.location.search);
-    const redirect = params.get('redirect');
-    
-    if (redirect) {
-      // Navigate to the redirect path
-      window.location.href = redirect;
-      return;
-    }
-  }, []);
-
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

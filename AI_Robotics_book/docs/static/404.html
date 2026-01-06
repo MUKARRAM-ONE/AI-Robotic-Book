@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Redirecting...</title>
   <script>
-    // SPA Routing for GitHub Pages
-    // This file handles routing for client-side navigation
-    var pathSegments = window.location.pathname.split('/').filter(Boolean);
+    // For truly missing pages (not /auth or /docs routes), redirect to home
+    var path = window.location.pathname;
     var baseUrl = '/AI-Robotic-Book';
     
-    // Store the path to be handled by React Router
-    sessionStorage.redirect = window.location.pathname;
-    
-    // Redirect to home page
+    // If it's /auth or /docs or any known dynamic route, let it load
+    // Otherwise this 404 will only serve for truly missing files
     window.location.href = baseUrl + '/';
   </script>
 </head>
 <body>
-  Redirecting...
+  Redirecting to home...
 </body>
 </html>
+
+
