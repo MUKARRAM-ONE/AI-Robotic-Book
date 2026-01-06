@@ -17,8 +17,8 @@ const config = {
   baseUrl: '/AI-Robotic-Book/',
 
   // GitHub pages deployment config.
-  organizationName: 'mukarram-one', // Usually your GitHub org/user name.
-  projectName: 'AI-driven-development', // Usually your repo name.
+  organizationName: 'MUKARRAM-ONE', // Usually your GitHub org/user name.
+  projectName: 'AI-Robotic-Book', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
