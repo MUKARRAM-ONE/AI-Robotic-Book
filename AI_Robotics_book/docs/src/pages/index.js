@@ -612,7 +612,7 @@ export default function Home() {
           </p>
           <div style={styles.heroButtons} className="hero-buttons">
             <a 
-              href="/AI-driven-development/docs/01-intro-to-ros2" 
+              href="/docs/01-intro-to-ros2" 
               style={{...styles.button, ...styles.buttonPrimary}}
               className="button-primary"
             >
@@ -696,7 +696,7 @@ export default function Home() {
         <h2 style={styles.ctaTitle}>Ready to Build Intelligent Robots?</h2>
         <p style={styles.ctaText}>Start with the fundamentals and progress to building your own autonomous systems.</p>
         <a 
-          href="/AI-driven-development/docs/01-intro-to-ros2" 
+          href="/docs/01-intro-to-ros2" 
           style={{...styles.button, ...styles.buttonPrimary, fontSize: '1.2rem', padding: '18px 48px'}}
           className="button-primary"
         >

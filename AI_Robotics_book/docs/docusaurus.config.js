@@ -76,7 +76,7 @@ const config = {
         },
         items: [
           {
-            to: '/AI-driven-development/docs/01-intro-to-ros2',
+            to: '/docs/01-intro-to-ros2',
             position: 'left',
             label: 'Textbook',
           },
@@ -86,19 +86,19 @@ const config = {
             items: [
               {
                 label: 'Module 1: ROS 2',
-                to: '/AI-driven-development/docs/01-intro-to-ros2',
+                to: '/docs/01-intro-to-ros2',
               },
               {
                 label: 'Module 2: Digital Twin',
-                to: '/AI-driven-development/docs/04-urdf-for-humanoids',
+                to: '/docs/04-urdf-for-humanoids',
               },
               {
                 label: 'Module 3: AI-Robot Brain',
-                to: '/AI-driven-development/docs/08-isaac-sim-intro',
+                to: '/docs/08-isaac-sim-intro',
               },
               {
                 label: 'Module 4: VLA',
-                to: '/AI-driven-development/docs/11-vla-whisper',
+                to: '/docs/11-vla-whisper',
               },
             ]
           },
@@ -126,7 +126,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/AI-driven-development/docs/01-intro-to-ros2',
+                to: '/docs/01-intro-to-ros2',
               },
             ],
           },
