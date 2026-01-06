@@ -34,7 +34,7 @@ const Login = () => {
         if (data.access_token) {
           localStorage.setItem('access_token', data.access_token);
         }
-        window.location.href = '/docs/01-intro-to-ros2';
+        window.location.href = '/AI-Robotic-Book/docs/01-intro-to-ros2';
       } else {
         let detail = 'Login failed. Please check your credentials.';
         try {
