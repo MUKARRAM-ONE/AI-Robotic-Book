@@ -1,0 +1,53 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .box { fill: #f9f9f9; stroke: #333; stroke-width: 2; }
+    .text { font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+    .title { font-family: sans-serif; font-size: 18px; text-anchor: middle; font-weight: bold; }
+    .arrow { stroke: #333; stroke-width: 2; marker-end: url(#arrowhead); }
+    .dashed-arrow { stroke: #333; stroke-width: 2; stroke-dasharray: 5,5; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" />
+    </marker>
+  </defs>
+
+  <text x="300" y="30" class="title">Module 1: ROS 2 Architecture</text>
+
+  <!-- Publisher Node -->
+  <rect x="50" y="150" width="150" height="60" rx="10" class="box" />
+  <text x="125" y="185" class="text">Publisher Node</text>
+  <text x="125" y="200" class="text">(e.g., /talker)</text>
+
+  <!-- Subscriber Node -->
+  <rect x="400" y="150" width="150" height="60" rx="10" class="box" />
+  <text x="475" y="185" class="text">Subscriber Node</text>
+  <text x="475" y="200" class="text">(e.g., /listener)</text>
+
+  <!-- Topic -->
+  <ellipse cx="275" cy="180" rx="60" ry="20" class="box" />
+  <text x="275" y="185" class="text">Topic</text>
+  <text x="275" y="200" class="text">(/chatter)</text>
+  
+  <!-- Arrows for Pub/Sub -->
+  <line x1="200" y1="180" x2="215" y2="180" class="arrow" />
+  <line x1="335" y1="180" x2="400" y2="180" class="arrow" />
+
+  <!-- Service Server Node -->
+  <rect x="50" y="280" width="150" height="60" rx="10" class="box" />
+  <text x="125" y="315" class="text">Service Server</text>
+
+  <!-- Service Client Node -->
+  <rect x="400" y="280" width="150" height="60" rx="10" class="box" />
+  <text x="475" y="315" class.text">Service Client</text>
+
+  <!-- Arrow for Service Request -->
+  <line x1="400" y1="310" x2="200" y2="310" class="arrow" />
+  <text x="300" y="305" class="text">Request</text>
+  
+  <!-- Arrow for Service Response -->
+  <line x1="200" y1="320" x2="400" y2="320" class="dashed-arrow" />
+  <text x="300" y="335" class="text">Response</text>
+
+</svg>

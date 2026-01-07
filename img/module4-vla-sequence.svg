@@ -1,0 +1,69 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .actor { fill: #f9f9f9; stroke: #333; stroke-width: 2; }
+    .component { fill: #f9f9f9; stroke: #333; stroke-width: 2; }
+    .text { font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+    .title { font-family: sans-serif; font-size: 18px; text-anchor: middle; font-weight: bold; }
+    .arrow { stroke: #333; stroke-width: 2; marker-end: url(#arrowhead); }
+    .lifeline { stroke: #333; stroke-dasharray: 5,5; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" class="title">VLA Voice-to-Action Pipeline Sequence Diagram</text>
+
+  <!-- Lifelines -->
+  <text x="100" y="80" class="text">Human</text>
+  <line x1="100" y1="90" x2="100" y2="550" class="lifeline" />
+
+  <text x="250" y="80" class="text">Microphone</text>
+  <line x1="250" y1="90" x2="250" y2="550" class="lifeline" />
+
+  <text x="400" y="80" class="text">Whisper Node</text>
+  <line x1="400" y1="90" x2="400" y2="550" class="lifeline" />
+
+  <text x="550" y="80" class="text">LLM Planner Node</text>
+  <line x1="550" y1="90" x2="550" y2="550" class="lifeline" />
+
+  <text x="700" y="80" class="text">Action Executor</text>
+  <line x1="700" y1="90" x2="700" y2="550" class="lifeline" />
+
+  <!-- Messages -->
+  <line x1="100" y1="120" x2="250" y2="120" class="arrow" />
+  <text x="175" y="115" class="text">1. Voice Command</text>
+
+  <line x1="250" y1="150" x2="400" y2="150" class="arrow" />
+  <text x="325" y="145" class="text">2. Audio Stream</text>
+
+  <line x1="400" y1="180" x2="400" y2="210" class="component" />
+  <text x="400" y="195" class="text">Transcribe</text>
+
+  <line x1="400" y1="230" x2="550" y2="230" class="arrow" />
+  <text x="475" y="225" class="text">3. Text Command (/voice_command/text)</text>
+
+  <line x1="550" y1="260" x2="550" y2="290" class="component" />
+  <text x="550" y="275" class="text">Query LLM</text>
+
+  <line x1="550" y1="310" x2="700" y2="310" class="arrow" />
+  <text x="625" y="305" class="text">4. Action Sequence (/robot_action_sequence)</text>
+
+  <line x1="700" y1="340" x2="700" y2="370" class="component" />
+  <text x="700" y="355" class="text">Execute ROS 2 Actions</text>
+
+  <line x1="700" y1="400" x2="550" y2="400" class="arrow" />
+  <text x="625" y="395" class="text">5. Feedback/Status</text>
+  
+  <line x1="550" y1="430" x2="400" y2="430" class="arrow" />
+  <text x="475" y="425" class="text">6. Clarification (if needed)</text>
+
+  <line x1="400" y1="460" x2="250" y2="460" class="arrow" />
+  <text x="325" y="455" class="text">7. TTS Response (optional)</text>
+
+  <line x1="250" y1="490" x2="100" y2="490" class="arrow" />
+  <text x="175" y="485" class="text">8. Audio Response</text>
+
+</svg>

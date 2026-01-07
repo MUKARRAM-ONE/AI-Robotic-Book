@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Robot Head -->
+  <circle cx="50" cy="35" r="20" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="42" cy="30" r="3" fill="#fff"/>
+  <circle cx="58" cy="30" r="3" fill="#fff"/>
+  <circle cx="42" cy="30" r="1.5" fill="#2c3e50"/>
+  <circle cx="58" cy="30" r="1.5" fill="#2c3e50"/>
+  
+  <!-- Mouth -->
+  <path d="M 42 38 Q 50 41 58 38" stroke="#2c3e50" stroke-width="1.5" fill="none"/>
+  
+  <!-- Robot Body -->
+  <rect x="40" y="56" width="20" height="25" fill="#2980b9" stroke="#2c3e50" stroke-width="2" rx="2"/>
+  
+  <!-- Arms -->
+  <rect x="25" y="62" width="15" height="8" fill="#3498db" stroke="#2c3e50" stroke-width="1.5" rx="2"/>
+  <rect x="60" y="62" width="15" height="8" fill="#3498db" stroke="#2c3e50" stroke-width="1.5" rx="2"/>
+  
+  <!-- Legs -->
+  <rect x="43" y="82" width="5" height="15" fill="#2980b9" stroke="#2c3e50" stroke-width="1.5" rx="1"/>
+  <rect x="52" y="82" width="5" height="15" fill="#2980b9" stroke="#2c3e50" stroke-width="1.5" rx="1"/>
+  
+  <!-- AI Brain Symbol -->
+  <circle cx="50" cy="68" r="3" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/>
+  <line x1="50" y1="71" x2="50" y2="75" stroke="#e74c3c" stroke-width="1.5"/>
+</svg>

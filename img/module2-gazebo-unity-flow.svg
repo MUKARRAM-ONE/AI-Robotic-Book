@@ -1,0 +1,47 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .component { fill: #f9f9f9; stroke: #333; stroke-width: 2; }
+    .data-store { fill: #e6e6e6; stroke: #333; stroke-width: 2; }
+    .text { font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+    .title { font-family: sans-serif; font-size: 18px; text-anchor: middle; font-weight: bold; }
+    .arrow { stroke: #333; stroke-width: 2; marker-end: url(#arrowhead); }
+    .dashed-arrow { stroke: #333; stroke-width: 2; stroke-dasharray: 5,5; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" class="title">Gazebo-to-Unity Data Streaming Flow</text>
+
+  <!-- Gazebo -->
+  <rect x="50" y="150" width="150" height="80" rx="10" class="component" />
+  <text x="125" y="185" class="text">Gazebo Simulation</text>
+  <text x="125" y="200" class="text">(Physics, Sensors)</text>
+
+  <!-- ROS 2 (rclpy nodes & topics) -->
+  <rect x="300" y="150" width="150" height="80" rx="10" class="component" />
+  <text x="375" y="185" class="text">ROS 2 Middleware</text>
+  <text x="375" y="200" class="text">(rclpy Nodes, Topics)</text>
+
+  <!-- Unity -->
+  <rect x="550" y="150" width="150" height="80" rx="10" class="component" />
+  <text x="625" y="185" class="text">Unity Visualization</text>
+  <text x="625" y="200" class="text">(ROS-TCP-Connector)</text>
+
+  <!-- Data Flow 1: Gazebo to ROS 2 -->
+  <line x1="200" y1="190" x2="300" y2="190" class="arrow" />
+  <text x="250" y="185" class="text">Joint States, TF, Sensor Data (Gazebo-ROS Plugins)</text>
+
+  <!-- Data Flow 2: ROS 2 to Unity -->
+  <line x1="450" y1="190" x2="550" y2="190" class="arrow" />
+  <text x="500" y="185" class="text">Joint States, TF (ROS-TCP-Connector)</text>
+  
+  <!-- Control Flow (Conceptual) -->
+  <line x1="375" y1="150" x2="375" y2="120" class="lifeline" />
+  <text x="375" y="110" class="text">ROS 2 Control Commands</text>
+  <line x1="375" y1="120" x2="125" y2="120" class="dashed-arrow" />
+
+</svg>

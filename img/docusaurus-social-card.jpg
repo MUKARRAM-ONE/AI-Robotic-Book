@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Title -->
+  <text x="600" y="150" font-size="72" font-weight="bold" text-anchor="middle" fill="white" font-family="Arial, sans-serif">
+    Physical AI &amp;
+  </text>
+  <text x="600" y="230" font-size="72" font-weight="bold" text-anchor="middle" fill="white" font-family="Arial, sans-serif">
+    Humanoid Robotics
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="320" font-size="36" text-anchor="middle" fill="#e0e0ff" font-family="Arial, sans-serif">
+    Bridging Digital Brain &amp; Physical Body
+  </text>
+  
+  <!-- Robot Icon -->
+  <g transform="translate(900, 450)">
+    <!-- Head -->
+    <circle cx="0" cy="-20" r="15" fill="#3498db" stroke="#fff" stroke-width="2"/>
+    <!-- Body -->
+    <rect x="-10" y="0" width="20" height="30" fill="#2980b9" stroke="#fff" stroke-width="2" rx="3"/>
+    <!-- Arms -->
+    <rect x="-30" y="5" width="20" height="8" fill="#3498db" stroke="#fff" stroke-width="2" rx="2"/>
+    <rect x="10" y="5" width="20" height="8" fill="#3498db" stroke="#fff" stroke-width="2" rx="2"/>
+  </g>
+  
+  <!-- Footer -->
+  <text x="100" y="580" font-size="24" fill="white" font-family="Arial, sans-serif">
+    Open-Source Learning Resource • 13 Chapters • Hands-On Examples
+  </text>
+</svg>

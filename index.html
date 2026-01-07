@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v2.4.1">
+<title data-rh="true">Physical AI &amp; Humanoid Robotics Textbook</title><meta data-rh="true" property="og:title" content="Physical AI &amp; Humanoid Robotics Textbook"><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://MUKARRAM-ONE.github.io/AI-Robotic-Book/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://MUKARRAM-ONE.github.io/AI-Robotic-Book/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://MUKARRAM-ONE.github.io/AI-Robotic-Book/"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><link data-rh="true" rel="icon" href="/AI-Robotic-Book/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://MUKARRAM-ONE.github.io/AI-Robotic-Book/"><link data-rh="true" rel="alternate" href="https://MUKARRAM-ONE.github.io/AI-Robotic-Book/" hreflang="en"><link data-rh="true" rel="alternate" href="https://MUKARRAM-ONE.github.io/AI-Robotic-Book/" hreflang="x-default"><script data-rh="true">function maybeInsertBanner(){window.__DOCUSAURUS_INSERT_BASEURL_BANNER&&insertBanner()}function insertBanner(){var n=document.getElementById("__docusaurus-base-url-issue-banner-container");if(n){n.innerHTML='\n<div id="__docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseUrl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/AI-Robotic-Book/</span> </p>\n   <p>We suggest trying baseUrl = <span id="__docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n';var e=document.getElementById("__docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,o="/"===s.substr(-1)?s:s+"/";e.innerHTML=o}}window.__DOCUSAURUS_INSERT_BASEURL_BANNER=!0,document.addEventListener("DOMContentLoaded",maybeInsertBanner)</script><link rel="stylesheet" href="/AI-Robotic-Book/assets/css/styles.c9dc5422.css">
+<link rel="preload" href="/AI-Robotic-Book/assets/js/runtime~main.d97b7e89.js" as="script">
+<link rel="preload" href="/AI-Robotic-Book/assets/js/main.cf84d437.js" as="script">
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}return t}()||function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"dark")}()</script><div id="__docusaurus">
+<div><div id="__docusaurus-base-url-issue-banner-container"></div><main><style>
+        * { box-sizing: border-box; }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(60px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-60px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(60px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+          0%, 100% { 
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.6);
+            transform: scale(1);
+          }
+          50% { 
+            box-shadow: 0 12px 50px rgba(59, 130, 246, 0.9);
+            transform: scale(1.05);
+          }
+        }
+        
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
+        }
+        
+        @keyframes gradient {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        
+        .scroll-reveal {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        
+        .reveal-animation {
+          animation: fadeInUp 1s ease forwards;
+        }
+        
+        .feature-card {
+          transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .feature-card:hover {
+          transform: translateY(-16px) scale(1.03);
+          box-shadow: 0 25px 60px rgba(59, 130, 246, 0.5);
+          border-color: rgba(59, 130, 246, 0.8);
+        }
+        
+        .feature-card:hover .feature-icon {
+          animation: float 2s ease-in-out infinite;
+        }
+        
+        .module {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .module:hover {
+          transform: translateY(-12px) scale(1.04) rotateZ(1deg);
+          box-shadow: 0 30px 70px rgba(139, 92, 246, 0.6);
+        }
+        
+        .button-primary {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .button-primary::before {
+          content: &#x27;&#x27;;
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+          transition: left 0.5s;
+        }
+        
+        .button-primary:hover::before {
+          left: 100%;
+        }
+        
+        .button-primary:hover {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 15px 40px rgba(255,255,255,0.4);
+        }
+        
+        .button-primary:active {
+          transform: translateY(-2px) scale(1.02);
+        }
+        
+        .button-secondary {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .button-secondary:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 12px 35px rgba(255, 255, 255, 0.2);
+        }
+        
+        .button-secondary:active {
+          transform: translateY(-2px) scale(1.02);
+        }
+        
+        .chat-button {
+          animation: pulse 3s ease-in-out infinite;
+          transition: all 0.3s ease;
+        }
+        
+        .chat-button:hover {
+          transform: scale(1.15) rotate(5deg);
+          animation: none;
+          box-shadow: 0 15px 50px rgba(59, 130, 246, 0.9);
+        }
+        
+        .chat-button:active {
+          transform: scale(1.05);
+        }
+        
+        .chat-send-btn {
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .chat-send-btn:hover {
+          transform: scale(1.1) rotate(-3deg);
+          box-shadow: 0 10px 25px rgba(59, 130, 246, 0.7);
+        }
+        
+        .chat-send-btn:active {
+          transform: scale(1.05);
+        }
+        
+        .chat-widget {
+          animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .user-message {
+          animation: slideInRight 0.4s ease;
+        }
+        
+        .bot-message {
+          animation: slideInLeft 0.4s ease;
+        }
+        
+        .modal {
+          animation: fadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .hero-content h1 {
+          animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .hero-content p {
+          animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .hero-buttons {
+          animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .module:nth-child(1) { animation-delay: 0.1s; }
+        .module:nth-child(2) { animation-delay: 0.2s; }
+        .module:nth-child(3) { animation-delay: 0.3s; }
+        .module:nth-child(4) { animation-delay: 0.4s; }
+        
+        @media (max-width: 768px) {
+          .chat-widget { width: 90%; max-width: 400px; }
+          .feature-grid { grid-template-columns: 1fr; }
+          .module-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      </style><section style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #ec4899 100%);color:white;padding:60px 20px 40px;text-align:center"><div style="max-width:900px;margin:0 auto" class="hero-content"><h1 style="font-size:clamp(3rem, 8vw, 5.5rem);font-weight:900;margin:0 0 24px 0;line-height:1.1;text-shadow:0 4px 20px rgba(0,0,0,0.3)">Physical AI &amp; Humanoid Robotics</h1><p style="font-size:clamp(1.2rem, 3vw, 1.8rem);margin:0 0 40px 0;opacity:0.95;line-height:1.6">Master the art of bridging digital intelligence with physical embodiment. Build autonomous systems that think, see, and act.</p><div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap" class="hero-buttons"><a href="/AI-Robotic-Book/docs/01-intro-to-ros2" style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;background:white;color:#1e3a8a;box-shadow:0 8px 24px rgba(255,255,255,0.2)" class="button-primary">Start Learning →</a><a href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main/AI_Robotics_book/docs" style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:2px solid white;cursor:pointer;background:rgba(255, 255, 255, 0.1);color:white;backdrop-filter:blur(10px)" class="button-secondary">View on GitHub</a><a href="/AI-Robotic-Book/auth?action=login" style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:2px solid white;cursor:pointer;background:rgba(255, 255, 255, 0.1);color:white;backdrop-filter:blur(10px)" class="button-secondary">Sign In</a><a href="/AI-Robotic-Book/auth?action=signup" style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;background:white;color:#1e3a8a;box-shadow:0 8px 24px rgba(255,255,255,0.2)" class="button-primary">Create Account</a></div></div></section><section style="padding:100px 20px;background:#0f172a" class="scroll-reveal"><h2 style="text-align:center;font-size:clamp(2.5rem, 5vw, 3.5rem);margin-bottom:20px;color:white;font-weight:900">What You&#x27;ll Master</h2><p style="text-align:center;font-size:1.2rem;color:#94a3b8;margin-bottom:60px;max-width:700px;margin:0 auto 60px">Comprehensive curriculum designed to transform you into a robotics expert</p><div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:30px;max-width:1400px;margin:0 auto"><div style="background:rgba(30, 41, 59, 0.8);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(148, 163, 184, 0.2);backdrop-filter:blur(10px);transition:all 0.4s ease" class="feature-card scroll-reveal"><div style="font-size:4rem;margin-bottom:20px" class="feature-icon">🤖</div><h3 style="font-size:1.6rem;margin-bottom:15px;color:white;font-weight:700">ROS 2 Fundamentals</h3><p style="color:#cbd5e1;line-height:1.7;margin:0;font-size:1.05rem">Master the Robot Operating System with hands-on examples and real-world applications.</p></div><div style="background:rgba(30, 41, 59, 0.8);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(148, 163, 184, 0.2);backdrop-filter:blur(10px);transition:all 0.4s ease" class="feature-card scroll-reveal"><div style="font-size:4rem;margin-bottom:20px" class="feature-icon">🎮</div><h3 style="font-size:1.6rem;margin-bottom:15px;color:white;font-weight:700">Digital Twins</h3><p style="color:#cbd5e1;line-height:1.7;margin:0;font-size:1.05rem">Build virtual representations of robots using Gazebo and Isaac Sim.</p></div><div style="background:rgba(30, 41, 59, 0.8);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(148, 163, 184, 0.2);backdrop-filter:blur(10px);transition:all 0.4s ease" class="feature-card scroll-reveal"><div style="font-size:4rem;margin-bottom:20px" class="feature-icon">🧠</div><h3 style="font-size:1.6rem;margin-bottom:15px;color:white;font-weight:700">AI Integration</h3><p style="color:#cbd5e1;line-height:1.7;margin:0;font-size:1.05rem">Implement intelligent behaviors using machine learning and planning algorithms.</p></div><div style="background:rgba(30, 41, 59, 0.8);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(148, 163, 184, 0.2);backdrop-filter:blur(10px);transition:all 0.4s ease" class="feature-card scroll-reveal"><div style="font-size:4rem;margin-bottom:20px" class="feature-icon">👁️</div><h3 style="font-size:1.6rem;margin-bottom:15px;color:white;font-weight:700">Vision &amp; Language</h3><p style="color:#cbd5e1;line-height:1.7;margin:0;font-size:1.05rem">Integrate VLMs and LLMs to enable robots to see, understand, and reason.</p></div><div style="background:rgba(30, 41, 59, 0.8);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(148, 163, 184, 0.2);backdrop-filter:blur(10px);transition:all 0.4s ease" class="feature-card scroll-reveal"><div style="font-size:4rem;margin-bottom:20px" class="feature-icon">📚</div><h3 style="font-size:1.6rem;margin-bottom:15px;color:white;font-weight:700">13 Chapters</h3><p style="color:#cbd5e1;line-height:1.7;margin:0;font-size:1.05rem">Comprehensive curriculum from basics to advanced robotics concepts.</p></div><div style="background:rgba(30, 41, 59, 0.8);padding:40px 30px;border-radius:20px;text-align:center;border:1px solid rgba(148, 163, 184, 0.2);backdrop-filter:blur(10px);transition:all 0.4s ease" class="feature-card scroll-reveal"><div style="font-size:4rem;margin-bottom:20px" class="feature-icon">💻</div><h3 style="font-size:1.6rem;margin-bottom:15px;color:white;font-weight:700">Hands-On Code</h3><p style="color:#cbd5e1;line-height:1.7;margin:0;font-size:1.05rem">Learn by doing with complete code examples and interactive tutorials.</p></div></div></section><section style="padding:100px 20px;background:#1e293b" class="scroll-reveal"><h2 style="text-align:center;font-size:clamp(2.5rem, 5vw, 3.5rem);margin-bottom:20px;color:white;font-weight:900">Course Structure</h2><p style="text-align:center;font-size:1.2rem;color:#94a3b8;margin-bottom:60px;max-width:700px;margin:0 auto 60px">Four comprehensive modules from fundamentals to advanced applications</p><div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:30px;max-width:1400px;margin:0 auto"><div style="background:linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);background-size:200% 200%;color:white;padding:40px 30px;border-radius:20px;box-shadow:0 10px 40px rgba(0, 0, 0, 0.3);transition:all 0.3s ease" class="module scroll-reveal"><h3 style="font-size:0.9rem;opacity:0.9;margin:0 0 10px 0;font-weight:700;letter-spacing:1px">MODULE <!-- -->1</h3><h4 style="font-size:1.8rem;margin:0 0 25px 0;font-weight:800">ROS 2 Fundamentals</h4><ul style="list-style:none;padding:0;margin:0"><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Introduction to ROS 2</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Nodes, Topics &amp; Services</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Python Integration</li></ul></div><div style="background:linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);background-size:200% 200%;color:white;padding:40px 30px;border-radius:20px;box-shadow:0 10px 40px rgba(0, 0, 0, 0.3);transition:all 0.3s ease" class="module scroll-reveal"><h3 style="font-size:0.9rem;opacity:0.9;margin:0 0 10px 0;font-weight:700;letter-spacing:1px">MODULE <!-- -->2</h3><h4 style="font-size:1.8rem;margin:0 0 25px 0;font-weight:800">Digital Twin &amp; Simulation</h4><ul style="list-style:none;padding:0;margin:0"><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->URDF for Humanoids</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Gazebo Fundamentals</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Unity Integration</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Sensor Simulation</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Isaac Sim Intro</li></ul></div><div style="background:linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);background-size:200% 200%;color:white;padding:40px 30px;border-radius:20px;box-shadow:0 10px 40px rgba(0, 0, 0, 0.3);transition:all 0.3s ease" class="module scroll-reveal"><h3 style="font-size:0.9rem;opacity:0.9;margin:0 0 10px 0;font-weight:700;letter-spacing:1px">MODULE <!-- -->3</h3><h4 style="font-size:1.8rem;margin:0 0 25px 0;font-weight:800">AI-Robot Brain</h4><ul style="list-style:none;padding:0;margin:0"><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Isaac ROS vSLAM</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Nav2 Path Planning</li></ul></div><div style="background:linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);background-size:200% 200%;color:white;padding:40px 30px;border-radius:20px;box-shadow:0 10px 40px rgba(0, 0, 0, 0.3);transition:all 0.3s ease" class="module scroll-reveal"><h3 style="font-size:0.9rem;opacity:0.9;margin:0 0 10px 0;font-weight:700;letter-spacing:1px">MODULE <!-- -->4</h3><h4 style="font-size:1.8rem;margin:0 0 25px 0;font-weight:800">Vision Language Models</h4><ul style="list-style:none;padding:0;margin:0"><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->VLM with Whisper</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->LLM Planning</li><li style="padding:10px 0;line-height:1.6;opacity:0.95;font-size:1.05rem">→ <!-- -->Capstone Project</li></ul></div></div></section><section style="padding:120px 20px;text-align:center;background:linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #ec4899 100%);color:white" class="scroll-reveal"><h2 style="font-size:clamp(2.5rem, 5vw, 3.5rem);margin-bottom:20px;font-weight:900">Ready to Build Intelligent Robots?</h2><p style="font-size:1.3rem;margin-bottom:50px;opacity:0.95;max-width:700px;margin:0 auto 50px;line-height:1.6">Start with the fundamentals and progress to building your own autonomous systems.</p><a href="/AI-Robotic-Book/docs/01-intro-to-ros2" style="padding:18px 48px;border-radius:12px;font-size:1.2rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;background:white;color:#1e3a8a;box-shadow:0 8px 24px rgba(255,255,255,0.2)" class="button-primary">Get Started Now</a></section><section style="padding:80px 20px;background:#0f172a;text-align:center" class="scroll-reveal"><h2 style="font-size:2.5rem;margin-bottom:16px;color:white;font-weight:900">Get in Touch</h2><p style="color:#94a3b8;font-size:1.2rem;margin-bottom:40px">Have questions? Reach out via GitHub, LinkedIn, or send a quick message.</p><div style="display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap"><a href="https://github.com/MUKARRAM-ONE/AI-Robotic-Book/tree/main/AI_Robotics_book/docs" target="_blank" rel="noreferrer" style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:2px solid white;cursor:pointer;background:rgba(255, 255, 255, 0.1);color:white;backdrop-filter:blur(10px)" class="button-secondary">GitHub</a><a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noreferrer" style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:2px solid white;cursor:pointer;background:rgba(255, 255, 255, 0.1);color:white;backdrop-filter:blur(10px)" class="button-secondary">LinkedIn</a><button style="padding:16px 36px;border-radius:12px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;background:white;color:#1e3a8a;box-shadow:0 8px 24px rgba(255,255,255,0.2)" class="button-primary">Send Message</button></div></section></main><div class="chatContainer_YDcI"><button class="chatButton_XkA1" title="AI Book Assistant">💬</button></div></div></div>
+<script src="/AI-Robotic-Book/assets/js/runtime~main.d97b7e89.js"></script>
+<script src="/AI-Robotic-Book/assets/js/main.cf84d437.js"></script>
+</body>
+</html>
