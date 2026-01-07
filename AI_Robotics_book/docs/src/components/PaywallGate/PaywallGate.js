@@ -10,8 +10,8 @@ const PaywallGate = ({ children }) => {
 
   useEffect(() => {
     const path = typeof window !== 'undefined' ? window.location.pathname : '';
-    const isHome = path === '/' || path === '/AI-driven-development' || path === '/AI-driven-development/';
-    const isAuth = path.startsWith('/AI-driven-development/auth') || path.startsWith('/auth');
+    const isHome = path === '/' || path === '/AI-Robotic-Book' || path === '/AI-Robotic-Book/';
+    const isAuth = path.startsWith('/AI-Robotic-Book/auth') || path.startsWith('/auth');
 
     // Do not enforce paywall on homepage or auth pages
     if (isHome || isAuth) {
@@ -51,8 +51,8 @@ const PaywallGate = ({ children }) => {
   }, [showPaywall, user]);
 
   const path = typeof window !== 'undefined' ? window.location.pathname : '';
-  const isHome = path === '/' || path === '/AI-driven-development' || path === '/AI-driven-development/';
-  const isAuth = path.startsWith('/AI-driven-development/auth') || path.startsWith('/auth');
+  const isHome = path === '/' || path === '/AI-Robotic-Book' || path === '/AI-Robotic-Book/';
+  const isAuth = path.startsWith('/AI-Robotic-Book/auth') || path.startsWith('/auth');
 
   // If loading or public pages, just render content
   if (loading || isHome || isAuth || user) return <div>{children}</div>;
